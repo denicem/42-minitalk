@@ -1,50 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sender.c                                           :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:11 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/10 18:52:29 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:50:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void sendChar(char *str, int pid)
+void send_msg(char *msg, int pid)
 {
-	while (*str)
+	while (*msg)
 	{
-		if (*str == '0')
+		if (*msg == '0')
 			kill(pid, SIGUSR1);
-		else if (*str == '1')
+		else if (*msg == '1')
 			kill(pid, SIGUSR2);
-		str++;
+		msg++;
 		usleep(100);
 	}
 }
 
 void dec_to_bin(int val, int pid)
 {
-	char *res;
+	char *bin_str;
 	int i;
 
 	i = 0;
-	res = ft_calloc(8 + 1, sizeof(char));
+	bin_str = ft_calloc(8 + 1, sizeof(char));
 	while (i < 8)
 	{
 		if ((128 & (val<<i)))
-			res[i] = '1';
+			bin_str[i] = '1';
 		else
-			res[i] = '0';
+			bin_str[i] = '0';
 		i++;
 	}
-	sendChar(res, pid);
-	free(res);
+	send_msg(bin_str, pid);
+	free(bin_str);
 }
 
-void str_to_char(char *input, int pid)
+void convert_n_send_msg(char *input, int pid)
 {
 	while (*input)
 	{
@@ -53,15 +53,32 @@ void str_to_char(char *input, int pid)
 	}
 }
 
+static int	is_only_digits(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+		{
+			printf("The PID should only contain digits.\n");
+			return (0);
+		}
+		str++;
+	}
+	return (1);
+}
+
 int main(int argc, char **argv)
 {
-	int pid;
+	int	pid;
 
 	if (argc == 3)
 	{
+		if (!is_only_digits(argv[1]))
+			return (0);
 		pid = ft_atoi(argv[1]);
-		str_to_char(argv[2], pid);
-		printf("finished\n");
+		convert_n_send_msg(argv[2], pid);
 	}
+	else
+		printf("Only three arguments please.\n");
 	return (0);
 }

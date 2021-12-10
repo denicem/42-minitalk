@@ -6,9 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/10 18:52:35 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:43:44 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//TODO: add ft_printf and replace every printf call.
 
 #include <stdio.h>
 #include <unistd.h>
@@ -17,9 +19,9 @@
 
 #include "libft.h"
 
-void createBin(int sig);
+void create_bin_str(int sig);
 void bin_to_dec(char *bin);
 
-void str_to_char(char *input, int pid);
+void convert_n_send_msg(char *input, int pid);
 void dec_to_bin(int val, int pid);
-void sendChar(char *str, int pid);
+void send_msg(char *str, int pid);
