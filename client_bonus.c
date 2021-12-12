@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:49 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/12 18:28:35 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/12 22:03:26 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+
+void handle_confirmation(int sig)
+{
+	printf("CONFIRMD!%d\n", sig);
+}
 
 int main(int argc, char **argv)
 {
@@ -25,5 +30,11 @@ int main(int argc, char **argv)
 		else
 			kill(pid, SIGUSR2);
 		usleep(500);
+		signal(SIGUSR1, &handle_confirmation);
+		struct sigaction sa;
+		sa.sa_handler = &handle_confirmation;
+		sigemptyset(&sa.sa_mask);
+		sa.sa_flags = SA_RESTART;
+		sigaction(SIGUSR1, &sa, NULL);
 	}
 }

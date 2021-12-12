@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:47 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/12 19:06:57 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/12 21:22:10 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ void handle_sigint(int sig)
 		printf("Signal 1 received!\n");
 	else if (sig == SIGUSR2)
 		printf("Signal 2 received!\n");
+}
+
+void handle_sigint1(int sig, siginfo_t *info, void *context)
+{
+	if (sig == SIGUSR1)
+		printf("Signal 1.1 received!\n");
+	else if (sig == SIGUSR2)
+		printf("Signal 2.1 received!\n");
+	kill(info->si_pid, SIGUSR1);
 }
 
 // void dec_to_bin(int val)
@@ -46,9 +55,9 @@ int main(void)
 	printf("PID: %d\n", pid);
 
 	struct sigaction sa;
-	sa.sa_handler= &handle_sigint;
+	sa.sa_handler= &handle_sigint1;
 	// sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
+	sa.sa_flags = SA_SIGINFO;
 
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
