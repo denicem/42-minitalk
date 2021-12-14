@@ -6,19 +6,13 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:11 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 17:20:55 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 19:42:39 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-void	msg_confirmd(int sig)
-{
-	(void) sig;
-	write(1, "Everything received!\n", 22);
-}
-
-void send_msg(char *msg, int pid)
+void	send_msg(char *msg, int pid)
 {
 	while (*msg)
 	{
@@ -31,16 +25,16 @@ void send_msg(char *msg, int pid)
 	}
 }
 
-void dec_to_bin(int val, int pid)
+void	dec_to_bin(int val, int pid)
 {
-	char *bin_str;
-	int i;
+	char	*bin_str;
+	int		i;
 
 	i = 0;
 	bin_str = ft_calloc(8 + 1, sizeof(char));
 	while (i < 8)
 	{
-		if ((128 & (val<<i)))
+		if ((128 & (val << i)))
 			bin_str[i] = '1';
 		else
 			bin_str[i] = '0';
@@ -50,14 +44,13 @@ void dec_to_bin(int val, int pid)
 	free(bin_str);
 }
 
-void convert_n_send_msg(char *input, int pid)
+void	convert_n_send_msg(char *input, int pid)
 {
 	while (*input)
 	{
 		dec_to_bin(*input, pid);
 		input++;
 	}
-	dec_to_bin(*input, pid);
 }
 
 static int	is_only_digits(char *str)
@@ -66,7 +59,7 @@ static int	is_only_digits(char *str)
 	{
 		if (!ft_isdigit(*str))
 		{
-			write(1, "The PID should only contain digits.\n", 37);
+			ft_printf("The PID should only contain digits.\n");
 			return (0);
 		}
 		str++;
@@ -74,7 +67,7 @@ static int	is_only_digits(char *str)
 	return (1);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int	pid;
 
@@ -84,11 +77,8 @@ int main(int argc, char **argv)
 			return (0);
 		pid = ft_atoi(argv[1]);
 		convert_n_send_msg(argv[2], pid);
-		signal(SIGUSR1, &msg_confirmd);
-		while (1)
-			pause();
 	}
 	else
-		write(1, "Only three arguments please.\n", 30);
+		ft_printf("Only three arguments please.\n");
 	return (0);
 }

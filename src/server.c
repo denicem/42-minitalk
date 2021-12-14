@@ -6,19 +6,19 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 22:51:50 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 17:20:39 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 19:44:03 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk.h"
 
-void bin_to_dec(char *bin_str)
+void	bin_to_dec(char *bin_str)
 {
-	int dec_val;
-	char c;
-	int bin_val;
+	int		dec_val;
+	char	c;
+	int		bin_val;
 
-	bin_val = 128; 
+	bin_val = 128;
 	dec_val = 0;
 	while (*bin_str)
 	{
@@ -32,10 +32,10 @@ void bin_to_dec(char *bin_str)
 	return ;
 }
 
-void create_bin_str(int sig)
+void	create_bin_str(int sig)
 {
-	static char bin_str[9];
-	static int i;
+	static char	bin_str[9];
+	static int	i;
 
 	if (sig == SIGUSR1)
 		bin_str[i++] = '0';
@@ -49,10 +49,12 @@ void create_bin_str(int sig)
 	}
 }
 
-int main(void)
+int	main(void)
 {
-	int pid = getpid();
-	printf("PID: %d\n", pid);
+	int	pid;
+
+	pid = getpid();
+	ft_printf("PID: %d\n", pid);
 	signal(SIGUSR1, &create_bin_str);
 	signal(SIGUSR2, &create_bin_str);
 	while (1)
