@@ -6,11 +6,17 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 15:39:11 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:20:53 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:20:55 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
+
+void	msg_confirmd(int sig)
+{
+	(void) sig;
+	write(1, "Everything received!\n", 22);
+}
 
 void send_msg(char *msg, int pid)
 {
@@ -51,6 +57,7 @@ void convert_n_send_msg(char *input, int pid)
 		dec_to_bin(*input, pid);
 		input++;
 	}
+	dec_to_bin(*input, pid);
 }
 
 static int	is_only_digits(char *str)
@@ -59,7 +66,7 @@ static int	is_only_digits(char *str)
 	{
 		if (!ft_isdigit(*str))
 		{
-			printf("The PID should only contain digits.\n");
+			write(1, "The PID should only contain digits.\n", 37);
 			return (0);
 		}
 		str++;
@@ -77,8 +84,11 @@ int main(int argc, char **argv)
 			return (0);
 		pid = ft_atoi(argv[1]);
 		convert_n_send_msg(argv[2], pid);
+		signal(SIGUSR1, &msg_confirmd);
+		while (1)
+			pause();
 	}
 	else
-		printf("Only three arguments please.\n");
+		write(1, "Only three arguments please.\n", 30);
 	return (0);
 }

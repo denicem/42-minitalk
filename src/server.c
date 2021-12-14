@@ -6,11 +6,11 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 22:51:50 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:20:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:20:39 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../inc/minitalk.h"
 
 void bin_to_dec(char *bin_str)
 {
@@ -18,7 +18,7 @@ void bin_to_dec(char *bin_str)
 	char c;
 	int bin_val;
 
-	bin_val = 128; //TODO: think of a different name.
+	bin_val = 128; 
 	dec_val = 0;
 	while (*bin_str)
 	{

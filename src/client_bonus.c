@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:49 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:36:02 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:33:27 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
+
+#include "../inc/minitalk_bonus.h"
 
 void msg_confirmed(int sig)
 {
@@ -88,11 +90,11 @@ int main(int argc, char **argv)
 			return (0);
 		pid = ft_atoi(argv[1]);
 		convert_n_send_msg(argv[2], pid);
-		signal(SIGUSR1, &msg_confirmed);
-		while (1)
-			pause();
 	}
 	else
 		printf("Only three arguments please.\n");
+	signal(SIGUSR1, &msg_confirmed);
+	while (1)
+		pause();
 	return (0);
 }

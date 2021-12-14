@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 01:28:17 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:28:51 by dmontema         ###   ########.fr       */
+/*   Created: 2021/09/11 16:05:33 by dmontema          #+#    #+#             */
+/*   Updated: 2021/09/15 14:21:48 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO: add ft_printf and replace every printf call.
-
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <signal.h>
-
 #include "libft.h"
 
-void create_bin_str(int sig);
-void bin_to_dec(char *bin);
-
-void convert_n_send_msg(char *input, int pid);
-void dec_to_bin(int val, int pid);
-void send_msg(char *str, int pid);
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (lst != NULL || del != NULL)
+	{
+		del(lst->content);
+		free(lst);
+	}
+}

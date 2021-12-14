@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:47 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:36:43 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:25:51 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,15 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void	print_char(int c)
-{
-	if (c == 0)
-		return ;
-}
+#include "../inc/minitalk_bonus.h"
 
-void bin_to_dec(char *bin_str)
+void bin_to_dec(char *bin_str, int pid)
 {
 	int dec_val;
 	char c;
 	int bin_val;
 
-	bin_val = 128; //TODO: think of a different name.
+	bin_val = 128;
 	dec_val = 0;
 	while (*bin_str)
 	{
@@ -37,6 +33,8 @@ void bin_to_dec(char *bin_str)
 		bin_str++;
 	}
 	c = dec_val;
+	if (dec_val == 0)
+		kill(pid, SIGUSR2);
 	write(1, &c, 1);
 	return ;
 }
@@ -53,12 +51,10 @@ void create_bin_str(int sig, siginfo_t *info, void *context)
 		bin_str[i++] = '1';
 	if (i == 8)
 	{
-		bin_to_dec(bin_str);
+		bin_to_dec(bin_str, info->si_pid);
 		i = 0;
 		*bin_str = 0;
 	}
-	usleep(500);
-	kill(SIGUSR1, info->si_pid);
 }
 
 int main(void)
