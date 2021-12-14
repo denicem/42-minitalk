@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:49 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/12 22:30:46 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:09:44 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,83 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void handle_confirmation(int sig)
+void msg_confirmed(int sig)
 {
-	printf("CONFIRMD!%d\n", sig);
+	(void)	sig;
+	printf("Messeage received!\n");
 	exit(0);
+}
+
+void send_msg(char *msg, int pid)
+{
+	while (*msg)
+	{
+		if (*msg == '0')
+			kill(pid, SIGUSR1);
+		else if (*msg == '1')
+			kill(pid, SIGUSR2);
+		msg++;
+		usleep(100);
+	}
+}
+
+void dec_to_bin(int val, int pid)
+{
+	char *bin_str;
+	int i;
+
+	i = 0;
+	bin_str = ft_calloc(8 + 1, sizeof(char));
+	while (i < 8)
+	{
+		if ((128 & (val<<i)))
+			bin_str[i] = '1';
+		else
+			bin_str[i] = '0';
+		i++;
+	}
+	send_msg(bin_str, pid);
+	free(bin_str);
+}
+
+void convert_n_send_msg(char *input, int pid)
+{
+	while (*input)
+	{
+		dec_to_bin(*input, pid);
+		input++;
+	}
+}
+
+static int	is_only_digits(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+		{
+			printf("The PID should only contain digits.\n");
+			return (0);
+		}
+		str++;
+	}
+	return (1);
 }
 
 int main(int argc, char **argv)
 {
+	int	pid;
+
 	if (argc == 3)
 	{
-		int pid = atoi(argv[1]);
-		if (atoi(argv[2]) == 0)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		// usleep(5000);
-		signal(SIGUSR1, &handle_confirmation);
-		struct sigaction sa;
-		sa.sa_handler = &handle_confirmation;
-		sigemptyset(&sa.sa_mask);
-		sa.sa_flags = SA_RESTART;
-		sigaction(SIGUSR1, &sa, NULL);
+		if (!is_only_digits(argv[1]))
+			return (0);
+		pid = ft_atoi(argv[1]);
+		convert_n_send_msg(argv[2], pid);
+		signal(SIGUSR1, &msg_confirmed);
 		while (1)
 			pause();
 	}
+	else
+		printf("Only three arguments please.\n");
+	return (0);
 }

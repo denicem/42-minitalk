@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:47 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/12 21:22:10 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:09:22 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,58 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void handle_sigint(int sig)
+void bin_to_dec(char *bin_str)
 {
-	if (sig == SIGUSR1)
-		printf("Signal 1 received!\n");
-	else if (sig == SIGUSR2)
-		printf("Signal 2 received!\n");
+	int dec_val;
+	char c;
+	int help;
+
+	help = 128; //TODO: think of a different name.
+	dec_val = 0;
+	while (*bin_str)
+	{
+		if (*bin_str == '1')
+			dec_val += help;
+		help /= 2;
+		bin_str++;
+	}
+	c = dec_val;
+	write(1, &c, 1);
+	return ;
 }
 
-void handle_sigint1(int sig, siginfo_t *info, void *context)
+void create_bin_str(int sig, siginfo_t *info, void *context)
 {
+	static char bin_str[9];
+	static int i;
+
+	(void)	context;
 	if (sig == SIGUSR1)
-		printf("Signal 1.1 received!\n");
+		bin_str[i++] = '0';
 	else if (sig == SIGUSR2)
-		printf("Signal 2.1 received!\n");
-	kill(info->si_pid, SIGUSR1);
+		bin_str[i++] = '1';
+	if (i == 8)
+	{
+		bin_to_dec(bin_str);
+		i = 0;
+		*bin_str = 0;
+	}
+	usleep(500);
+	kill(SIGUSR1, info->si_pid);
 }
-
-// void dec_to_bin(int val)
-// {
-// 	int i;
-
-// 	i = 0;
-// 	while (i < 8)
-// 	{
-// 		if ((128 & (val<<i)))
-// 			write (1, "1", 1);
-// 		else
-// 			write(1, "0", 1);
-// 		i++;
-// 	}
-// 	printf("\n");
-// }
 
 int main(void)
 {
-	// dec_to_bin('0');
-	int pid = getpid();
-	printf("PID: %d\n", pid);
-
+	int pid;
 	struct sigaction sa;
-	sa.sa_handler= &handle_sigint1;
-	// sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_SIGINFO;
 
+	pid = getpid();
+	sa.sa_sigaction = &create_bin_str;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART | SA_SIGINFO;
+	printf("PID: %d\n", pid);
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
 	while (1)
 		pause();
 	return (0);

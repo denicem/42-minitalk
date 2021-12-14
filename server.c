@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 22:51:50 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/10 19:41:51 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:20:46 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void bin_to_dec(char *bin_str)
 {
 	int dec_val;
 	char c;
-	int help;
+	int bin_val;
 
-	help = 128; //TODO: think of a different name.
+	bin_val = 128; //TODO: think of a different name.
 	dec_val = 0;
 	while (*bin_str)
 	{
 		if (*bin_str == '1')
-			dec_val += help;
-		help /= 2;
+			dec_val += bin_val;
+		bin_val /= 2;
 		bin_str++;
 	}
 	c = dec_val;
