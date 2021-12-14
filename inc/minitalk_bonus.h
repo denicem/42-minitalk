@@ -6,11 +6,9 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:28:17 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 18:24:25 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 18:50:16 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//TODO: add ft_printf and replace every printf call.
 
 #include <stdio.h>
 #include <unistd.h>

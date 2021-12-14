@@ -6,7 +6,7 @@
 #    By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/25 16:06:18 by dmontema          #+#    #+#              #
-#    Updated: 2021/12/14 18:44:34 by dmontema         ###   ########.fr        #
+#    Updated: 2021/12/14 18:48:54 by dmontema         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ all:	$(NAME)
 
 $(NAME): $(LIBC_OBJS)
 	@$(AR) ../../$(NAME) $(LIBC_OBJS)
-	@printf "\x1B[32mCompilation complete.\n\x1B[0m"
+	@printf "\x1B[32mLIBFT: Compilation complete.\n\x1B[0m"
 
 bonus: $(NAME) $(BONUS_OBJS)
 	$(AR) $(NAME) $(BONUS_OBJS)
