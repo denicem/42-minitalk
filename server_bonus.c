@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:47 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:09:22 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:36:43 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,25 @@
 #include <stdlib.h>
 #include <signal.h>
 
+void	print_char(int c)
+{
+	if (c == 0)
+		return ;
+}
+
 void bin_to_dec(char *bin_str)
 {
 	int dec_val;
 	char c;
-	int help;
+	int bin_val;
 
-	help = 128; //TODO: think of a different name.
+	bin_val = 128; //TODO: think of a different name.
 	dec_val = 0;
 	while (*bin_str)
 	{
 		if (*bin_str == '1')
-			dec_val += help;
-		help /= 2;
+			dec_val += bin_val;
+		bin_val /= 2;
 		bin_str++;
 	}
 	c = dec_val;

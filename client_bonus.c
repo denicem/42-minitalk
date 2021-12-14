@@ -6,7 +6,7 @@
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 18:27:49 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/14 01:09:44 by dmontema         ###   ########.fr       */
+/*   Updated: 2021/12/14 01:36:02 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void convert_n_send_msg(char *input, int pid)
 		dec_to_bin(*input, pid);
 		input++;
 	}
+	dec_to_bin(*input, pid);
 }
 
 static int	is_only_digits(char *str)
