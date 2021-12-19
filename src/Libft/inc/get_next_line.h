@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/09/23 20:22:36 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/17 19:23:18 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#ifndef GET_NEXT_LINE_H
+# define	GET_NEXT_LINE_H
 
-# include "../src/Libft/inc/libft.h"
-
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
+char	*get_next_line(int fd);
+int		prepareVars(int fd, char **storage, char **readbuf, char **res);
+char	*readLine(int fd, char **storage, char **readbuf, char **res);
+char	*getRes(char **storage, char **readbuf, char **res);
+char	*ft_strjoin_gnl(char *s1, char *s2, int len_s2);
 
 #	endif

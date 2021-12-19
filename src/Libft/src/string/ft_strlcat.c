@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/08/23 17:00:32 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/17 17:44:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#include "../../inc/libft.h"
 
-# include "../src/Libft/inc/libft.h"
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	i;
 
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
-
-#	endif
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	i = 0;
+	if (dst_len >= dstsize)
+		return (src_len + dstsize);
+	while (dst_len + i < dstsize - 1 && src[i])
+	{
+		dst[dst_len + i] = src[i];
+		i++;
+	}
+	dst[dst_len + i] = '\0';
+	return (dst_len + src_len);
+}

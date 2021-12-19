@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/09/10 19:00:30 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/17 17:47:15 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#include "../../inc/libft.h"
 
-# include "../src/Libft/inc/libft.h"
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*l;
 
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
-
-#	endif
+	if (new != NULL || lst != NULL)
+	{
+		l = ft_lstlast(*lst);
+		if (l == NULL)
+			*lst = new;
+		else
+			l->next = new;
+	}
+}

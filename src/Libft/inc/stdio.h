@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   stdio.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/12/04 22:13:45 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/19 18:05:02 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#ifndef STDIO_H
+# define	STDIO_H
 
-# include "../src/Libft/inc/libft.h"
+# include "ft_printf.h"
+# include "get_next_line.h"
 
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
 
 #	endif

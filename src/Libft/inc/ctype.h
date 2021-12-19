@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ctype.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/12/04 17:14:21 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/17 18:04:29 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#ifndef CTYPE_H
+# define	CTYPE_H
 
-# include "../src/Libft/inc/libft.h"
-
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
+int	ft_isalpha(int c);
+int	ft_isdigit(int c);
+int	ft_isalnum(int c);
+int	ft_isprint(int c);
+int	ft_isascii(int c);
+int	ft_isspace(int c);
+int	ft_islower(int c);
+int	ft_isupper(int c);
+int	ft_tolower(int c);
+int	ft_toupper(int c);
 
 #	endif

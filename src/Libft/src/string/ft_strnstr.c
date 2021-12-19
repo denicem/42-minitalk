@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmontema <dmontema@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/10 18:11:34 by dmontema          #+#    #+#             */
-/*   Updated: 2021/12/19 17:56:31 by dmontema         ###   ########.fr       */
+/*   Created: 2021/08/24 15:40:26 by dmontema          #+#    #+#             */
+/*   Updated: 2021/12/17 17:44:42 by dmontema         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define	MINITALK_H
-# include <unistd.h>
-# include <stdlib.h>
-# include <signal.h>
+#include "../../inc/libft.h"
 
-# include "../src/Libft/inc/libft.h"
+char	*ft_strnstr(const char *hay, const char *needle, size_t len)
+{
+	size_t	i;
+	size_t	j;
 
-void	create_bin_str(int sig);
-void	bin_to_dec(char *bin_str);
-
-void	convert_n_send_msg(char *input, int pid);
-void	dec_to_bin(int val, int pid);
-void	send_msg(char *str, int pid);
-
-#	endif
+	if (!needle[0])
+		return ((char *) hay);
+	i = 0;
+	while (hay[i])
+	{
+		j = 0;
+		if (hay[i] == needle[j])
+		{
+			while (hay[i + j] == needle[j] && i + j < len && hay[i + j])
+			{
+				if (needle[j + 1] == '\0')
+					return ((char *) hay + i);
+				j++;
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
